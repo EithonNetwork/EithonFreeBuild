@@ -5,7 +5,7 @@ import java.util.List;
 import net.eithon.library.extensions.EithonPlayer;
 import net.eithon.library.extensions.EithonPlugin;
 import net.eithon.library.json.PlayerCollection;
-import net.eithon.library.misc.Debug.DebugPrintLevel;
+import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.library.plugin.ConfigurableMessage;
 import net.eithon.library.plugin.Configuration;
 import net.eithon.library.time.CoolDown;
@@ -87,13 +87,13 @@ public class Commands {
 
 	public boolean canUseFreebuilderProtection(Player player, boolean warnIfNotInFreebuildWorld)
 	{
-		this._eithonPlugin.getDebug().debug(DebugPrintLevel.VERBOSE, 
+		this._eithonPlugin.getLogger().debug(DebugPrintLevel.VERBOSE, 
 				"canUseFreebuilderProtection: Return false if the current player is not a freebuilder.");
 		if (!isFreeBuilder(player)) return false;
-		this._eithonPlugin.getDebug().debug(DebugPrintLevel.VERBOSE,
+		this._eithonPlugin.getLogger().debug(DebugPrintLevel.VERBOSE,
 				"canUseFreebuilderProtection: Return false if the player's current world is not a freebuilder world.");
 		if (!inFreebuildWorld(player, warnIfNotInFreebuildWorld)) return false;
-		this._eithonPlugin.getDebug().debug(DebugPrintLevel.VERBOSE,
+		this._eithonPlugin.getLogger().debug(DebugPrintLevel.VERBOSE,
 				"canUseFreebuilderProtection: Returns true.");
 		return true;
 	}
