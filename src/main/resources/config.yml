@@ -1,0 +1,34 @@
+#
+# The worlds that we want to have access to freebuild functionality
+#
+FreebuildWorldNames: [W_SurvivalFreebuild]
+
+#
+# StillBannedMinutesMessage has 1 parameters: <minutes left> (%d)
+#
+StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you are banned for another %d minutes more.
+
+#
+# Print debug messages. Set this to 1 for debug messages.
+#
+DoDebugPrint: 0
+
+#
+# The mandatory cooldown time between calling /freebuild on and /freebuild off
+#
+CoolDownTimeInMinutes: 30
+
+messages:
+
+  #
+  # This message is displayed when someone tries to use freebuild outside the allowed worlds (see FreebuildWorldNames)
+  # It has no parameters.
+  #
+  MustBeInFreebuildWord: You can only switch between survival and freebuild in the SurvivalFreebuild world.
+
+  #
+  # This message is displayed when someone switches to fast between on and off
+  # Parameters: <minutes left> (%d), <seconds left> (%d)
+  #
+  WaitForCoolDown: The remaining cool down period for switching Freebuild mode is %d minutes and %d seconds.
+
