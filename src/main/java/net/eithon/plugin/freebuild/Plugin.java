@@ -1,6 +1,7 @@
 package net.eithon.plugin.freebuild;
 
 import net.eithon.library.extensions.EithonPlugin;
+import net.eithon.plugin.freebuild.logic.Controller;
 
 import org.bukkit.event.Listener;
 

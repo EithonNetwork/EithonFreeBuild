@@ -1,4 +1,4 @@
-package net.eithon.plugin.freebuild;
+package net.eithon.plugin.freebuild.logic;
 
 import java.util.UUID;
 

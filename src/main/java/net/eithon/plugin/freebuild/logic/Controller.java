@@ -1,4 +1,4 @@
-package net.eithon.plugin.freebuild;
+package net.eithon.plugin.freebuild.logic;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class Controller {
 		return this._freeBuilders.hasInformation(player);
 	}
 
-	boolean inFreebuildWorld(Player player, boolean mustBeInFreeBuildWord) {
+	public boolean inFreebuildWorld(Player player, boolean mustBeInFreeBuildWord) {
 		String currentWorldName = player.getWorld().getName();
 		for (String worldName : this._applicableWorlds) {
 			if (currentWorldName.equalsIgnoreCase(worldName)) return true;
