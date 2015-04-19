@@ -1,8 +1,8 @@
 package net.eithon.plugin.freebuild;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.misc.Debug;
-import net.eithon.library.misc.Debug.DebugPrintLevel;
+import net.eithon.library.plugin.Logger;
+import net.eithon.library.plugin.Logger.DebugPrintLevel;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -16,26 +16,13 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
-public class Events implements Listener {
-	private static Events singleton = null;
+public class EventListener implements Listener {
 	private EithonPlugin _eithonPlugin = null;
+	private Controller _controller;
 
-	private Events() {
-	}
-
-	static Events get()
-	{
-		if (singleton == null) {
-			singleton = new Events();
-		}
-		return singleton;
-	}
-
-	void enable(EithonPlugin plugin){
-		this._eithonPlugin = plugin;
-	}
-
-	void disable() {
+	public EventListener(EithonPlugin eithonPlugin, Controller controller) {
+		this._controller = controller;
+		this._eithonPlugin = eithonPlugin;
 	}
 
 	// Avoid becoming a target
@@ -49,7 +36,7 @@ public class Events implements Listener {
 
 		if (!(event.getEntity() instanceof Monster)) return;
 
-		if (!Commands.get().canUseFreebuilderProtection(player)) return;
+		if (!this._controller.canUseFreebuilderProtection(player)) return;
 
 		event.setCancelled(true);
 	}
@@ -66,7 +53,7 @@ public class Events implements Listener {
 		if (!(event.getEntity() instanceof Monster)) return;
 		Monster monster = (Monster) event.getEntity();
 
-		if (!Commands.get().canUseFreebuilderProtection(player)) return;
+		if (!this._controller.canUseFreebuilderProtection(player)) return;
 
 		// You can attack monsters that targets you
 		if (monster.getTarget() == player) return;
@@ -83,7 +70,7 @@ public class Events implements Listener {
 		if (!(entity instanceof Player)) return;
 		Player player = (Player) entity;
 
-		if (!Commands.get().canUseFreebuilderProtection(player)) return;
+		if (!this._controller.canUseFreebuilderProtection(player)) return;
 
 		event.setCancelled(true);
 	}
@@ -96,7 +83,7 @@ public class Events implements Listener {
 		boolean shooterIsFreeBuilder = false;
 		if(event.getPotion().getShooter() instanceof Player) {
 			shooter = (Player) event.getPotion().getShooter();
-			shooterIsFreeBuilder = Commands.get().canUseFreebuilderProtection(shooter);
+			shooterIsFreeBuilder = this._controller.canUseFreebuilderProtection(shooter);
 		}
 		for (LivingEntity livingEntity : event.getAffectedEntities()) {
 			if (!(livingEntity instanceof Player)) {
@@ -106,7 +93,7 @@ public class Events implements Listener {
 			}
 			Player affectedPlayer = (Player) livingEntity;
 			boolean shooterAndAffectedAreTheSamePlayer = affectedPlayer.getUniqueId() == shooter.getUniqueId();
-			boolean affectedIsFreebuilder = Commands.get().canUseFreebuilderProtection(affectedPlayer);
+			boolean affectedIsFreebuilder = this._controller.canUseFreebuilderProtection(affectedPlayer);
 			// Freebuilders can affect themselves
 			if (shooterIsFreeBuilder && shooterAndAffectedAreTheSamePlayer) continue;
 			// Non freebuilders can affect each other
@@ -118,7 +105,7 @@ public class Events implements Listener {
 	// Survival players can't fly
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
-		Debug debug = this._eithonPlugin.getDebug();
+		Logger debug = this._eithonPlugin.getEithonLogger();
 		debug.debug(DebugPrintLevel.VERBOSE, "1. Entered onPlayerToggleFlightEvent");
 		debug.debug(DebugPrintLevel.VERBOSE, "2. Cancel if event already has been cancelled.");
 		if (event.isCancelled()) return;
@@ -126,14 +113,14 @@ public class Events implements Listener {
 		if (!event.isFlying()) return;
 		
 		debug.debug(DebugPrintLevel.VERBOSE, "4. Give OK if the player is not in any of the free builder worlds.");
-		if (!Commands.get().inFreebuildWorld(event.getPlayer(), false)) return;
+		if (!this._controller.inFreebuildWorld(event.getPlayer(), false)) return;
 		
 		// Allow players with permission freebuild.canfly to fly
 		debug.debug(DebugPrintLevel.VERBOSE, "5. Give OK if user has freebuild.canfly permission.");
 		if (event.getPlayer().hasPermission("freebuild.canfly")) return;
 		
 		debug.debug(DebugPrintLevel.VERBOSE, "5. Give OK if the player is a freebuilder.");
-		if (Commands.get().isFreeBuilder(event.getPlayer())) return;
+		if (this._controller.isFreeBuilder(event.getPlayer())) return;
 		debug.debug(DebugPrintLevel.VERBOSE, "6. Final decision: The player is not allowed to fly.");
 		event.getPlayer().sendMessage("You are currently not allowed to fly.");
 		event.setCancelled(true);
