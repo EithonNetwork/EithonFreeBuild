@@ -9,9 +9,14 @@ FreebuildWorldNames: [W_SurvivalFreebuild]
 StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you are banned for another %d minutes more.
 
 #
-# Print debug messages. Set this to 1 for debug messages.
+# Debug level
+#	0 = NONE (no debug messages)
+#	1 = MAJOR (only major messages)
+#	2 = MINOR (also minor messages)
+#	3 = VERBOSE (all messages)
 #
-DoDebugPrint: 0
+EithonDebugLevel: 0
+
 
 #
 # The mandatory cooldown time between calling /freebuild on and /freebuild off
