@@ -1,29 +1,19 @@
 package net.eithon.plugin.freebuild.logic;
 
-import java.util.List;
+import net.eithon.library.extensions.EithonPlugin;
+import net.eithon.library.json.PlayerCollection;
+import net.eithon.library.plugin.Logger.DebugPrintLevel;
+import net.eithon.plugin.freebuild.Config;
 
 import org.bukkit.entity.Player;
 
-import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.json.PlayerCollection;
-import net.eithon.library.plugin.ConfigurableMessage;
-import net.eithon.library.plugin.Configuration;
-import net.eithon.library.plugin.Logger.DebugPrintLevel;
-
 public class Controller {
-	private ConfigurableMessage _mustBeInFreebuildWordMessage;
 	private PlayerCollection<FreeBuilderInfo> _freeBuilders = new PlayerCollection<FreeBuilderInfo>(new FreeBuilderInfo());
-	private List<String> _applicableWorlds;
 	private EithonPlugin _eithonPlugin;
 
 	public Controller(EithonPlugin eithonPlugin) {
 		this._eithonPlugin = eithonPlugin;
-		Configuration config = eithonPlugin.getConfiguration();
 		this._freeBuilders = new PlayerCollection<FreeBuilderInfo>(new FreeBuilderInfo());
-		this._applicableWorlds = config.getStringList("FreebuildWorldNames");	
-		this._mustBeInFreebuildWordMessage = config.getConfigurableMessage(
-				"messages.MustBeInFreebuildWord", 0, 
-				"You can only switch between survival and freebuild in the SurvivalFreebuild world.");
 	}
 
 	public void addToFreeBuilders(Player player) {
@@ -41,10 +31,10 @@ public class Controller {
 
 	public boolean inFreebuildWorld(Player player, boolean mustBeInFreeBuildWord) {
 		String currentWorldName = player.getWorld().getName();
-		for (String worldName : this._applicableWorlds) {
+		for (String worldName : Config.V.applicableWorlds) {
 			if (currentWorldName.equalsIgnoreCase(worldName)) return true;
 		}
-		if (mustBeInFreeBuildWord) this._mustBeInFreebuildWordMessage.sendMessage(player);
+		if (mustBeInFreeBuildWord) Config.M.mustBeInFreebuildWord.sendMessage(player);
 		return false;
 	}
 

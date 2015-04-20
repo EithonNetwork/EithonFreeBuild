@@ -15,19 +15,12 @@ import org.bukkit.entity.Player;
 public class CommandHandler implements ICommandHandler {
 	private static final String ON_COMMAND = "/freebuild on";
 	private static final String OFF_COMMAND = "/freebuild off";
-	private ConfigurableMessage _waitForCoolDownMessage;
-	private int _coolDownTimeInMinutes;
 	private CoolDown _coolDown;
 	private Controller _controller;
 
 	public CommandHandler(EithonPlugin eithonPlugin, Controller controller) {
 		this._controller = controller;
-		Configuration config = eithonPlugin.getConfiguration();
-		this._coolDownTimeInMinutes = config.getInt("CoolDownTimeInMinutes", 30);
-		this._waitForCoolDownMessage = config.getConfigurableMessage(
-				"messages.WaitForCoolDown", 2, 
-				"The remaining cool down period for switching Freebuild mode is %d minutes and %d seconds.");
-		this._coolDown = new CoolDown("freebuild", this._coolDownTimeInMinutes*60);
+		this._coolDown = new CoolDown("freebuild", Config.V.coolDownTimeInMinutes*60);
 	}
 
 	public boolean onCommand(CommandParser commandParser) {
@@ -95,7 +88,7 @@ public class CommandHandler implements ICommandHandler {
 
 		int minutes = secondsLeft/60;
 		int seconds = secondsLeft - 60 * minutes;
-		this._waitForCoolDownMessage.sendMessage(player, minutes, seconds);
+		Config.M.waitForCoolDown.sendMessage(player, minutes, seconds);
 		return false;
 	}
 
