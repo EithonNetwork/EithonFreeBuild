@@ -32,3 +32,27 @@ messages:
   #
   WaitForCoolDown: The remaining cool down period for switching Freebuild mode is %d minutes and %d seconds.
 
+  #
+  # The player tried to activate freebuild mode, but it already was active.
+  # Parameters: NONE
+  #
+  AlreadyOn_0: Freebuild mode is already active.
+
+  #
+  # The player tried to deactivate freebuild mode, but it already was deactivated.
+  # Parameters: NONE
+  #
+  AlreadyOff_0: Survival mode is already active (freebuild is OFF).
+
+  #
+  # The freebuild mode has been successfully activated
+  # Parameters: NONE
+  #
+  Activated_0: Freebuild mode is now active.
+
+  #
+  # The freebuild mode has been successfully deactivated
+  # Parameters: NONE
+  #
+  Deactivated_0: Survival mode is now active (freebuild is OFF).
+
