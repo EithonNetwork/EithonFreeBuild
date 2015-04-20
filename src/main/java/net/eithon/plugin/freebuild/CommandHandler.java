@@ -27,7 +27,8 @@ public class CommandHandler implements ICommandHandler {
 		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1)) return true;
 		EithonPlayer eithonPlayer = commandParser.getEithonPlayerOrInformSender();
 		if (eithonPlayer == null) return true;
-		String command = commandParser.getArgumentStringAsLowercase(0);
+		
+		String command = commandParser.getArgumentCommand();
 		if (command.equals("on")) {
 			freeBuildOnCommand(commandParser);
 		} else if (command.equals("off")) {
