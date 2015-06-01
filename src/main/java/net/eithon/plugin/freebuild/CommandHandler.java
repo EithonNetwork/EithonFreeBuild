@@ -27,7 +27,8 @@ public class CommandHandler implements ICommandHandler {
 		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1)) return true;
 		EithonPlayer eithonPlayer = commandParser.getEithonPlayerOrInformSender();
 		if (eithonPlayer == null) return true;
-		String command = commandParser.getArgumentStringAsLowercase(0);
+		
+		String command = commandParser.getArgumentCommand();
 		if (command.equals("on")) {
 			freeBuildOnCommand(commandParser);
 		} else if (command.equals("off")) {
@@ -45,7 +46,7 @@ public class CommandHandler implements ICommandHandler {
 		Player player = commandParser.getPlayer();
 		if (this._controller.isFreeBuilder(player))
 		{
-			player.sendMessage("Freebuild mode is already active.");
+			Config.M.alreadyOn.sendMessage(player);
 			return;
 		}
 
@@ -56,7 +57,7 @@ public class CommandHandler implements ICommandHandler {
 		if (!verifyCoolDown(player)) return;
 		this._controller.addToFreeBuilders(player);
 		
-		player.sendMessage("Freebuild mode is now active.");
+		Config.M.activated.sendMessage(player);
 		this._coolDown.addPlayer(player);
 	}
 
@@ -69,13 +70,14 @@ public class CommandHandler implements ICommandHandler {
 
 		if (!this._controller.isFreeBuilder(player))
 		{
-			player.sendMessage("Survival mode is already active (freebuild is OFF).");
+			Config.M.alreadyOff.sendMessage(player);
 			return;
 		}
 
 		if (!verifyCoolDown(player)) return;
 
 		this._controller.removeFromFreeBuilders(player);
+		Config.M.deactivated.sendMessage(player);
 		player.sendMessage("Survival mode is now active (freebuild is OFF).");	
 		this._coolDown.addPlayer(player);	
 	}
