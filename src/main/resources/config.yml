@@ -15,7 +15,7 @@ StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you 
 #	2 = MINOR (also minor messages)
 #	3 = VERBOSE (all messages)
 #
-EithonDebugLevel: 0
+EithonDebugLevel: 1
 
 
 #
