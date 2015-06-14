@@ -115,23 +115,25 @@ public class EventListener implements Listener {
 			return;
 		}
 		
-		if (!this._controller.inFreebuildWorld(event.getPlayer(), false)) {
+		Player player = event.getPlayer();
+		if (!this._controller.inFreebuildWorld(player, false)) {
 			debug("onPlayerToggleFlightEvent", "Not in a freebuilder world. Return.");
 			return;
 		}
 		
 		// Allow players with permission freebuild.canfly to fly
-		if (event.getPlayer().hasPermission("freebuild.canfly")) {
+		if (player.hasPermission("freebuild.canfly")) {
 			debug("onPlayerToggleFlightEvent", "User has freebuild.canfly permission. Return.");
 			return;
 		}
 		
-		if (this._controller.isFreeBuilder(event.getPlayer())) {
+		if (this._controller.isFreeBuilder(player)) {
 			debug("onPlayerToggleFlightEvent", "The player is a freebuilder. Return.");
+			player.setFlySpeed(Config.V.flySpeed);
 			return;
 		}
 		debug("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");
-		event.getPlayer().sendMessage("You are currently not allowed to fly.");
+		player.sendMessage("You are currently not allowed to fly.");
 		event.setCancelled(true);
 	}
 

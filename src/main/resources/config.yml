@@ -17,6 +17,10 @@ StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you 
 #
 EithonDebugLevel: 1
 
+#
+# The fly speed for freebuilders that can fly
+#
+FlySpeed: 0.1
 
 #
 # The mandatory cooldown time between calling /freebuild on and /freebuild off
