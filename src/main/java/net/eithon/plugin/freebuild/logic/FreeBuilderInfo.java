@@ -3,21 +3,17 @@ package net.eithon.plugin.freebuild.logic;
 import java.util.UUID;
 
 import net.eithon.library.core.IUuidAndName;
-import net.eithon.library.json.Converter;
+import net.eithon.library.extensions.EithonPlayer;
 import net.eithon.library.json.IJson;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONObject;
 
 class FreeBuilderInfo implements IJson<FreeBuilderInfo>, IUuidAndName {
-	private UUID playerId;
-	private String playerName;
+	private EithonPlayer _player;
 	
 	FreeBuilderInfo(Player player)
 	{
-		this.playerId = player.getUniqueId();
-		this.playerName = player.getName();
+		this._player = new EithonPlayer(player);
 	}
 	
 	FreeBuilderInfo() {
@@ -25,12 +21,12 @@ class FreeBuilderInfo implements IJson<FreeBuilderInfo>, IUuidAndName {
 	
 	Player getPlayer()
 	{
-		return Bukkit.getServer().getPlayer(this.playerId);
+		return this._player.getPlayer();
 	}
 	
 	public String getName()
 	{
-		return this.playerName;
+		return this._player.getName();
 	}
 
 	public String toString() {
@@ -44,18 +40,17 @@ class FreeBuilderInfo implements IJson<FreeBuilderInfo>, IUuidAndName {
 
 	@Override
 	public UUID getUniqueId() {
-		return this.playerId;
+		return this._player.getUniqueId();
 	}
 
 	@Override
 	public Object toJson() {
-		return Converter.fromPlayer(this.playerId, this.playerName);
+		return this._player.toJson();
 	}
 
 	@Override
-	public void fromJson(Object json) {
-		this.playerId = Converter.toPlayerId((JSONObject) json);
-		this.playerName = Converter.toPlayerName((JSONObject) json);
-		
+	public FreeBuilderInfo fromJson(Object json) {
+		this._player = EithonPlayer.getFromJSon(json);
+		return this;
 	}
 }

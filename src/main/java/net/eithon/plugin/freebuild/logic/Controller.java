@@ -30,9 +30,11 @@ public class Controller {
 	}
 
 	public boolean inFreebuildWorld(Player player, boolean mustBeInFreeBuildWord) {
-		String currentWorldName = player.getWorld().getName();
-		for (String worldName : Config.V.applicableWorlds) {
-			if (currentWorldName.equalsIgnoreCase(worldName)) return true;
+		if (Config.V.applicableWorlds != null) {
+			String currentWorldName = player.getWorld().getName();
+			for (String worldName : Config.V.applicableWorlds) {
+				if (currentWorldName.equalsIgnoreCase(worldName)) return true;
+			}
 		}
 		if (mustBeInFreeBuildWord) Config.M.mustBeInFreebuildWord.sendMessage(player);
 		return false;

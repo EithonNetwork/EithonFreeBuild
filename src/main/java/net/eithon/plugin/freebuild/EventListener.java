@@ -1,7 +1,6 @@
 package net.eithon.plugin.freebuild;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.plugin.Logger;
 import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.freebuild.logic.Controller;
 
@@ -106,24 +105,39 @@ public class EventListener implements Listener {
 	// Survival players can't fly
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
-		Logger debug = this._eithonPlugin.getEithonLogger();
-		debug.debug(DebugPrintLevel.VERBOSE, "1. Entered onPlayerToggleFlightEvent");
-		debug.debug(DebugPrintLevel.VERBOSE, "2. Cancel if event already has been cancelled.");
-		if (event.isCancelled()) return;
-		debug.debug(DebugPrintLevel.VERBOSE, "3. Give OK if the player doesn't try to fly, i.e. is landing.");
-		if (!event.isFlying()) return;
+		debug("onPlayerToggleFlightEvent", "Enter");
+		if (event.isCancelled()) {
+			debug("onPlayerToggleFlightEvent", "Event has already been cancelled. Return.");
+			return;
+		}
+		if (!event.isFlying()) {
+			debug("onPlayerToggleFlightEvent", "Not flying, rather landing. Return.");
+			return;
+		}
 		
-		debug.debug(DebugPrintLevel.VERBOSE, "4. Give OK if the player is not in any of the free builder worlds.");
-		if (!this._controller.inFreebuildWorld(event.getPlayer(), false)) return;
+		Player player = event.getPlayer();
+		if (!this._controller.inFreebuildWorld(player, false)) {
+			debug("onPlayerToggleFlightEvent", "Not in a freebuilder world. Return.");
+			return;
+		}
 		
 		// Allow players with permission freebuild.canfly to fly
-		debug.debug(DebugPrintLevel.VERBOSE, "5. Give OK if user has freebuild.canfly permission.");
-		if (event.getPlayer().hasPermission("freebuild.canfly")) return;
+		if (player.hasPermission("freebuild.canfly")) {
+			debug("onPlayerToggleFlightEvent", "User has freebuild.canfly permission. Return.");
+			return;
+		}
 		
-		debug.debug(DebugPrintLevel.VERBOSE, "5. Give OK if the player is a freebuilder.");
-		if (this._controller.isFreeBuilder(event.getPlayer())) return;
-		debug.debug(DebugPrintLevel.VERBOSE, "6. Final decision: The player is not allowed to fly.");
-		event.getPlayer().sendMessage("You are currently not allowed to fly.");
+		if (this._controller.isFreeBuilder(player)) {
+			debug("onPlayerToggleFlightEvent", "The player is a freebuilder. Set fly speed and return.");
+			Config.C.setSpeed.execute(Config.V.flySpeed, player.getName());
+			return;
+		}
+		debug("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");
+		player.sendMessage("You are currently not allowed to fly.");
 		event.setCancelled(true);
+	}
+
+	private void debug(String method, String message) {
+		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
 	}
 }
