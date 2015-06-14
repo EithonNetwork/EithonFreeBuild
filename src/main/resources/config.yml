@@ -32,7 +32,7 @@ commands:
   # This command is dispatched when a player starts to fly in freebuild mode.
   # Parameters: <FlySpeed> (%.2f), <player name> (%s)
   #
-  SetSpeed: /speed fly %.2f %s
+  SetSpeed: speed fly %.2f %s
 
 messages:
 

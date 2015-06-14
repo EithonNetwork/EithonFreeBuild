@@ -33,7 +33,7 @@ public class Config {
 
 		static void load(Configuration config) {
 			setSpeed = config.getConfigurableCommand("commands.SetSpeed", 2,
-					"/speed fly %.2f %s");
+					"speed fly %.2f %s");
 		}
 
 	}
