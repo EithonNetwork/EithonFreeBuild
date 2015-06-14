@@ -1,7 +1,6 @@
 package net.eithon.plugin.freebuild;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.plugin.Logger;
 import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.freebuild.logic.Controller;
 
@@ -107,7 +106,6 @@ public class EventListener implements Listener {
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
 		debug("onPlayerToggleFlightEvent", "Enter");
-		Logger debug = this._eithonPlugin.getEithonLogger();
 		if (event.isCancelled()) {
 			debug("onPlayerToggleFlightEvent", "Event has already been cancelled. Return.");
 			return;

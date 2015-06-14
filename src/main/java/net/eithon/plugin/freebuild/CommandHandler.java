@@ -3,8 +3,6 @@ package net.eithon.plugin.freebuild;
 import net.eithon.library.extensions.EithonPlayer;
 import net.eithon.library.extensions.EithonPlugin;
 import net.eithon.library.plugin.CommandParser;
-import net.eithon.library.plugin.ConfigurableMessage;
-import net.eithon.library.plugin.Configuration;
 import net.eithon.library.plugin.ICommandHandler;
 import net.eithon.library.time.CoolDown;
 import net.eithon.plugin.freebuild.logic.Controller;
