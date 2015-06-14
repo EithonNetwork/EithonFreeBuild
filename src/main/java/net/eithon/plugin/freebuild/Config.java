@@ -3,6 +3,7 @@ package net.eithon.plugin.freebuild;
 import java.util.List;
 
 import net.eithon.library.extensions.EithonPlugin;
+import net.eithon.library.plugin.ConfigurableCommand;
 import net.eithon.library.plugin.ConfigurableMessage;
 import net.eithon.library.plugin.Configuration;
 
@@ -28,8 +29,11 @@ public class Config {
 
 	}
 	public static class C {
+		public static ConfigurableCommand setSpeed;
 
 		static void load(Configuration config) {
+			setSpeed = config.getConfigurableCommand("commands.SetSpeed", 0,
+					"/speed1");
 		}
 
 	}

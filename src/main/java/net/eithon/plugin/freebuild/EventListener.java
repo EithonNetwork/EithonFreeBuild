@@ -129,7 +129,7 @@ public class EventListener implements Listener {
 		
 		if (this._controller.isFreeBuilder(player)) {
 			debug("onPlayerToggleFlightEvent", "The player is a freebuilder. Return.");
-			player.setFlySpeed(Config.V.flySpeed);
+			Config.C.setSpeed.executeAs(player);
 			return;
 		}
 		debug("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");

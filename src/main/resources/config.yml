@@ -27,6 +27,13 @@ FlySpeed: 0.1
 #
 CoolDownTimeInMinutes: 30
 
+commands:
+  #
+  # This message is displayed when someone tries to use freebuild outside the allowed worlds (see FreebuildWorldNames)
+  # It has no parameters.
+  #
+  SetSpeed: "/speed1"
+
 messages:
 
   #
