@@ -85,6 +85,7 @@ public class EventListener implements Listener {
 			shooter = (Player) event.getPotion().getShooter();
 			shooterIsFreeBuilder = this._controller.canUseFreebuilderProtection(shooter);
 		}
+		if (shooter == null) return;
 		for (LivingEntity livingEntity : event.getAffectedEntities()) {
 			if (!(livingEntity instanceof Player)) {
 				// FreeBuilders can't affect non-players
