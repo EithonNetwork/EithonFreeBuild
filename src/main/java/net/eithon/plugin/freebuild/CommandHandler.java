@@ -83,11 +83,11 @@ public class CommandHandler implements ICommandHandler {
 	private boolean verifyCoolDown(Player player) {
 		if (player.hasPermission("freebuild.nocooldown")) return true;
 
-		int secondsLeft = this._coolDown.secondsLeft(player);
+		long secondsLeft = this._coolDown.secondsLeft(player);
 		if (secondsLeft == 0) return true;
 
-		int minutes = secondsLeft/60;
-		int seconds = secondsLeft - 60 * minutes;
+		long minutes = secondsLeft/60;
+		long seconds = secondsLeft - 60 * minutes;
 		Config.M.waitForCoolDown.sendMessage(player, minutes, seconds);
 		return false;
 	}
