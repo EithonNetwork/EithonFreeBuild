@@ -9,23 +9,27 @@ FreebuildWorldNames: [W_SurvivalFreebuild]
 StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you are banned for another %d minutes more.
 
 #
-# Debug level
-#	0 = NONE (no debug messages)
-#	1 = MAJOR (only major messages)
-#	2 = MINOR (also minor messages)
-#	3 = VERBOSE (all messages)
-#
-EithonDebugLevel: 1
-
-#
 # The fly speed for freebuilders that can fly
 #
-FlySpeed: 0.1
+FlySpeed: 0.3
 
 #
 # The mandatory cooldown time between calling /freebuild on and /freebuild off
 #
 CoolDownTimeInMinutes: 30
+
+eithon:
+  UseMarkUpForMessages: 0
+  UseWrappingForMessages: 0
+  
+  #
+  # Debug level
+  #  0 = NONE (no debug messages)
+  #  1 = MAJOR (only major messages)
+  #  2 = MINOR (also minor messages)
+  #  3 = VERBOSE (all messages)
+  #
+  EithonDebugLevel: 1
 
 commands:
   #
@@ -71,4 +75,3 @@ messages:
   # Parameters: NONE
   #
   Deactivated_0: Survival mode is now active (freebuild is OFF).
-
