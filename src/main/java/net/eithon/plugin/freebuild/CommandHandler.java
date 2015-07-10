@@ -22,11 +22,12 @@ public class CommandHandler implements ICommandHandler {
 	}
 
 	public boolean onCommand(CommandParser commandParser) {
-		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1)) return true;
 		EithonPlayer eithonPlayer = commandParser.getEithonPlayerOrInformSender();
 		if (eithonPlayer == null) return true;
 		
 		String command = commandParser.getArgumentCommand();
+		if (command == null) return false;
+		
 		if (command.equals("on")) {
 			freeBuildOnCommand(commandParser);
 		} else if (command.equals("off")) {
