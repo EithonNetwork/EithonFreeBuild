@@ -77,7 +77,6 @@ public class CommandHandler implements ICommandHandler {
 
 		this._controller.removeFromFreeBuilders(player);
 		Config.M.deactivated.sendMessage(player);
-		player.sendMessage("Survival mode is now active (freebuild is OFF).");	
 		this._coolDown.addPlayer(player);	
 	}
 
