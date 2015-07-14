@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 1.0.2 (2015-07-14)
+
+* BUG: Minor bug: "Survival mode is now active (freebuild is OFF)" appears two times
+
 ### 1.0.1 (2015-07-08)
 
 * BUG: Now shows subcommands if no subcommand was given.
