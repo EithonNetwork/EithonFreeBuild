@@ -50,7 +50,7 @@ class FreeBuilderInfo implements IJson<FreeBuilderInfo>, IUuidAndName {
 
 	@Override
 	public FreeBuilderInfo fromJson(Object json) {
-		this._player = EithonPlayer.getFromJSon(json);
+		this._player = EithonPlayer.getFromJson(json);
 		return this;
 	}
 }
