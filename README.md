@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 1.0.3 (2015-07-21)
+
+* CHANGE: Now sends an optional command when the user tries to fly in survival mode.
+
 ### 1.0.2 (2015-07-14)
 
 * BUG: Minor bug: "Survival mode is now active (freebuild is OFF)" appears two times

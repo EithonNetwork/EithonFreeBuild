@@ -136,6 +136,7 @@ public class EventListener implements Listener {
 		debug("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");
 		player.sendMessage("You are currently not allowed to fly.");
 		event.setCancelled(true);
+		Config.C.stopFly.executeAs(event.getPlayer());
 	}
 
 	private void debug(String method, String message) {
