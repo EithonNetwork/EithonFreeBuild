@@ -30,10 +30,13 @@ public class Config {
 	}
 	public static class C {
 		public static ConfigurableCommand setSpeed;
+		public static ConfigurableCommand stopFly;
 
 		static void load(Configuration config) {
 			setSpeed = config.getConfigurableCommand("commands.SetSpeed", 2,
 					"speed fly %.2f %s");
+			stopFly = config.getConfigurableCommand("commands.StopFly", 0,
+					"fly");
 		}
 
 	}

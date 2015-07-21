@@ -37,6 +37,12 @@ commands:
   # Parameters: <FlySpeed> (%.2f), <player name> (%s)
   #
   SetSpeed: speed fly %.2f %s
+  
+  #
+  # This command is dispatched when a player tries to fly when not supposed to.
+  # Parameters: -
+  #
+  StopFly: fly
 
 messages:
 
