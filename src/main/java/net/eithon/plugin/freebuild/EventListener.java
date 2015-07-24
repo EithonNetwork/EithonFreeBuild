@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -15,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class EventListener implements Listener {
 	private EithonPlugin _eithonPlugin = null;
@@ -47,9 +49,16 @@ public class EventListener implements Listener {
 		if (event.isCancelled()) return;
 
 		Entity damager = event.getDamager();
-		if (!(damager instanceof Player)) return;
-		Player player = (Player) damager;
+		Player player = null;
+		if (damager instanceof Player) player = (Player) damager;
+		else if (damager instanceof Projectile) {
+			Projectile projectile = (Projectile) damager;
+			ProjectileSource source = projectile.getShooter();
+			if (source instanceof Player) player = (Player) source; 
+		}
 
+		if (player == null) return;
+		
 		if (!(event.getEntity() instanceof Monster)) return;
 		Monster monster = (Monster) event.getEntity();
 
@@ -61,7 +70,7 @@ public class EventListener implements Listener {
 		event.setCancelled(true);
 	}
 
-	// No damage
+	// No damage on self
 	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if (event.isCancelled()) return;
