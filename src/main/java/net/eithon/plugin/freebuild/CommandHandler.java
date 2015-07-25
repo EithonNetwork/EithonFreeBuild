@@ -57,7 +57,7 @@ public class CommandHandler implements ICommandHandler {
 		this._controller.addToFreeBuilders(player);
 		
 		Config.M.activated.sendMessage(player);
-		this._coolDown.addPlayer(player);
+		this._coolDown.addIncident(player);
 	}
 
 	void freeBuildOffCommand(CommandParser commandParser)
@@ -77,7 +77,7 @@ public class CommandHandler implements ICommandHandler {
 
 		this._controller.removeFromFreeBuilders(player);
 		Config.M.deactivated.sendMessage(player);
-		this._coolDown.addPlayer(player);	
+		this._coolDown.addIncident(player);	
 	}
 
 	private boolean verifyCoolDown(Player player) {
