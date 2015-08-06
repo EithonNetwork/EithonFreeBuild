@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 1.1 ()
+
+* CHANGE: All time span configuration values are now in the general TimeSpan format instead of hard coded to seconds or minutes or hours.
+
 ### 1.0.4 (2015-07-24)
 
 * BUG: Freebuilder could damage monsters by shooting arrows.

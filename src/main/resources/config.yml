@@ -4,11 +4,6 @@
 FreebuildWorldNames: [W_SurvivalFreebuild]
 
 #
-# StillBannedMinutesMessage has 1 parameters: <minutes left> (%d)
-#
-StillBannedMinutesMessage: Due to your earlier death in the hardcore world, you are banned for another %d minutes more.
-
-#
 # The fly speed for freebuilders that can fly
 #
 FlySpeed: 0.3
@@ -16,7 +11,7 @@ FlySpeed: 0.3
 #
 # The mandatory cooldown time between calling /freebuild on and /freebuild off
 #
-CoolDownTimeInMinutes: 30
+CoolDownTime: 30m
 
 eithon:
   UseMarkUpForMessages: 0
