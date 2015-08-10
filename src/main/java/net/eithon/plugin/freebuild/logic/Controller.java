@@ -14,14 +14,17 @@ public class Controller {
 	public Controller(EithonPlugin eithonPlugin) {
 		this._eithonPlugin = eithonPlugin;
 		this._freeBuilders = new PlayerCollection<FreeBuilderInfo>(new FreeBuilderInfo());
+		delayedLoad(eithonPlugin);
 	}
 
 	public void addToFreeBuilders(Player player) {
 		this._freeBuilders.put(player, new FreeBuilderInfo(player));
+		delayedSave();
 	}
 
 	public void removeFromFreeBuilders(Player player) {
 		this._freeBuilders.remove(player);
+		delayedSave();
 	}
 
 	public boolean isFreeBuilder(Player player)
@@ -56,5 +59,13 @@ public class Controller {
 		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE,
 				"canUseFreebuilderProtection: Returns true.");
 		return true;
+	}
+
+	private void delayedSave() {
+		this._freeBuilders.delayedSave(this._eithonPlugin, "freebuilders.json", "FreeBuilders", 0);
+	}
+
+	private void delayedLoad(EithonPlugin eithonPlugin) {
+		this._freeBuilders.delayedLoad(eithonPlugin, "freebuilders.json", 0);
 	}
 }

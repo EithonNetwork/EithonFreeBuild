@@ -18,7 +18,7 @@ public class CommandHandler implements ICommandHandler {
 
 	public CommandHandler(EithonPlugin eithonPlugin, Controller controller) {
 		this._controller = controller;
-		this._coolDown = new CoolDown("freebuild", Config.V.coolDownTimeInMinutes*60);
+		this._coolDown = new CoolDown("freebuild", Config.V.coolDownTimeInSeconds);
 	}
 
 	public boolean onCommand(CommandParser commandParser) {

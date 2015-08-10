@@ -17,12 +17,12 @@ public class Config {
 
 	}
 	public static class V {
-		public static int coolDownTimeInMinutes;
+		public static long coolDownTimeInSeconds;
 		public static  List<String> applicableWorlds;
 		public static float flySpeed;
 
 		static void load(Configuration config) {
-			coolDownTimeInMinutes = config.getInt("CoolDownTimeInMinutes", 30);
+			coolDownTimeInSeconds = config.getSeconds("CoolDownTime", "30m");
 			applicableWorlds = config.getStringList("FreebuildWorldNames");
 			flySpeed = (float) config.getDouble("FlySpeed", 0.1);
 		}
