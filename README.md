@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 1.2 (2015-09-10)
+
+* NEW: Added a /freebuild release <player> command to release players from cool down.
+
 ### 1.1 (2015-08-10)
 
 * NEW: Now restores information about freebuild players after a restart.

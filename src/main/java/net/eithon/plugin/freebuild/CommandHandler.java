@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 public class CommandHandler implements ICommandHandler {
 	private static final String ON_COMMAND = "/freebuild on";
 	private static final String OFF_COMMAND = "/freebuild off";
+	private static final String RELEASE_COMMAND = "/freebuild release [<player>]";
 	private CoolDown _coolDown;
 	private Controller _controller;
 
@@ -32,6 +33,8 @@ public class CommandHandler implements ICommandHandler {
 			freeBuildOnCommand(commandParser);
 		} else if (command.equals("off")) {
 			freeBuildOffCommand(commandParser);
+		} else if (command.equals("release")) {
+			releaseCommand(commandParser);
 		} else {
 			commandParser.showCommandSyntax();
 		}
@@ -80,6 +83,30 @@ public class CommandHandler implements ICommandHandler {
 		this._coolDown.addIncident(player);	
 	}
 
+	void releaseCommand(CommandParser commandParser)
+	{
+		if (!commandParser.hasPermissionOrInformSender("freebuild.release")) return;
+		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1, 2)) return;
+		
+		Player player = commandParser.getArgumentPlayer(commandParser.getPlayer());
+		if (player == null) {
+			commandParser.showCommandSyntax();
+			return;
+		}
+
+		if (verifyCoolDown(player)) {
+			Config.M.notInCoolDown.sendMessage(commandParser.getSender(), player.getName());
+			return;
+		}
+		
+		releaseFromCoolDown(player);
+		Config.M.releasedFromCoolDown.sendMessage(commandParser.getSender(), player.getName());
+	}
+
+	private void releaseFromCoolDown(Player player) {
+		this._coolDown.removePlayer(player);		
+	}
+
 	private boolean verifyCoolDown(Player player) {
 		if (player.hasPermission("freebuild.nocooldown")) return true;
 
@@ -98,6 +125,8 @@ public class CommandHandler implements ICommandHandler {
 			sender.sendMessage(ON_COMMAND);
 		} else if (command.equals("off")) {
 			sender.sendMessage(OFF_COMMAND);
+		} else if (command.equals("release")) {
+			sender.sendMessage(RELEASE_COMMAND);
 		} else {
 			sender.sendMessage(String.format("Unknown command: %s.", command));
 		}

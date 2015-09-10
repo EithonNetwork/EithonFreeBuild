@@ -1,6 +1,6 @@
 name: EithonFreeBuild
 main: net.eithon.plugin.freebuild.Plugin
-version: 1.1
+version: 1.2
 author: vanbrayne
 description: A Minecraft plugin for turning "Free Build" on and off
 depend: [EithonLibrary]
@@ -15,6 +15,7 @@ permissions:
     default: op
     freebuild.on: true
     freebuild.off: true
+    freebuild.release: true
     freebuild.canfly: true
     freebuild.nocooldown: true
   freebuild.on:
@@ -22,6 +23,9 @@ permissions:
     default: op
   freebuild.off:
     description: Access to /freebuild off command
+    default: op
+  freebuild.release:
+    description: Access to /freebuild release command
     default: op
   freebuild.canfly:
     description: Can fly even in freebuild mode

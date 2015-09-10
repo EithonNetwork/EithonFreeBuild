@@ -47,6 +47,8 @@ public class Config {
 		public static ConfigurableMessage alreadyOff;
 		public static ConfigurableMessage activated;
 		public static ConfigurableMessage deactivated;
+		public static ConfigurableMessage notInCoolDown;
+		public static ConfigurableMessage releasedFromCoolDown;
 
 		static void load(Configuration config) {
 			waitForCoolDown = config.getConfigurableMessage(
@@ -67,6 +69,12 @@ public class Config {
 			deactivated = config.getConfigurableMessage(
 					"messages.Deactivated_0", 0, 
 					"Survival mode is now active (freebuild is OFF).");
+			notInCoolDown = config.getConfigurableMessage(
+					"messages.NotInCoolDown_1", 1, 
+					"The player %s was not in cool down.");
+			releasedFromCoolDown = config.getConfigurableMessage(
+					"messages.ReleasedFromCoolDown_1", 1, 
+					"The player %s was released from cool down.");
 		}		
 	}
 
