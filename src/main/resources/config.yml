@@ -76,3 +76,15 @@ messages:
   # Parameters: NONE
   #
   Deactivated_0: Survival mode is now active (freebuild is OFF).
+
+  #
+  # Tried to release a player not in cool down.
+  # Parameters: <player name>(%s)
+  #
+  NotInCoolDown_1: The player %s was not in cool down.
+
+  #
+  # A player has been released from cool down.
+  # Parameters: <player name>(%s)
+  #
+  ReleasedFromCoolDown_1: The player %s was released from cool down.
