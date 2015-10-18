@@ -4,11 +4,11 @@ import java.util.UUID;
 
 import net.eithon.library.core.IUuidAndName;
 import net.eithon.library.extensions.EithonPlayer;
-import net.eithon.library.json.IJson;
+import net.eithon.library.json.JsonObject;
 
 import org.bukkit.entity.Player;
 
-class FreeBuilderInfo implements IJson<FreeBuilderInfo>, IUuidAndName {
+class FreeBuilderInfo extends JsonObject<FreeBuilderInfo> implements IUuidAndName {
 	private EithonPlayer _player;
 	
 	FreeBuilderInfo(Player player)

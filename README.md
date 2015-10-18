@@ -1,4 +1,4 @@
-# FreeBuild
+# EithonFreeBuild
 
 A FreeBuild plugin for Minecraft; Like gamemode survival, but you are not attacked by mobs (and can't attack them) and you don't get damaged
 
@@ -24,6 +24,10 @@ When the user changes to FreeBuild mode, the following applies:
 * The user can't be damaged
 
 ## Release history
+
+### 1.3 (2015-10-18)
+
+* CHANGE: Refactoring EithonLibrary.
 
 ### 1.2 (2015-09-10)
 
