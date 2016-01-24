@@ -1,6 +1,6 @@
 name: EithonFreeBuild
 main: net.eithon.plugin.freebuild.Plugin
-version: 1.3
+version: ${project.version}
 author: vanbrayne
 description: A Minecraft plugin for turning "Free Build" on and off
 depend: [EithonLibrary]
