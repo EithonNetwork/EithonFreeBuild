@@ -2,7 +2,6 @@ package net.eithon.plugin.freebuild.logic;
 
 import net.eithon.library.extensions.EithonPlugin;
 import net.eithon.library.json.PlayerCollection;
-import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.freebuild.Config;
 
 import org.bukkit.entity.Player;
@@ -50,14 +49,11 @@ public class Controller {
 
 	public boolean canUseFreebuilderProtection(Player player, boolean warnIfNotInFreebuildWorld)
 	{
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, 
-				"canUseFreebuilderProtection: Return false if the current player is not a freebuilder.");
+		verbose("canUseFreebuilderProtection", "Return false if the current player is not a freebuilder.");
 		if (!isFreeBuilder(player)) return false;
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE,
-				"canUseFreebuilderProtection: Return false if the player's current world is not a freebuilder world.");
+		verbose("canUseFreebuilderProtection", "Return false if the player's current world is not a freebuilder world.");
 		if (!inFreebuildWorld(player, warnIfNotInFreebuildWorld)) return false;
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE,
-				"canUseFreebuilderProtection: Returns true.");
+		verbose("canUseFreebuilderProtection", "Returns true.");
 		return true;
 	}
 
@@ -67,5 +63,10 @@ public class Controller {
 
 	private void delayedLoad(EithonPlugin eithonPlugin) {
 		this._freeBuilders.delayedLoad(eithonPlugin, "freebuilders.json", 0);
+	}
+	
+	private void verbose(String method, String format, Object... args)
+	{
+		this._eithonPlugin.dbgVerbose("Controller", method, format, args);
 	}
 }

@@ -1,7 +1,6 @@
 package net.eithon.plugin.freebuild;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.freebuild.logic.Controller;
 
 import org.bukkit.entity.Entity;
@@ -115,40 +114,41 @@ public class EventListener implements Listener {
 	// Survival players can't fly
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
-		debug("onPlayerToggleFlightEvent", "Enter");
+		verbose("onPlayerToggleFlightEvent", "Enter");
 		if (event.isCancelled()) {
-			debug("onPlayerToggleFlightEvent", "Event has already been cancelled. Return.");
+			verbose("onPlayerToggleFlightEvent", "Event has already been cancelled. Return.");
 			return;
 		}
 		if (!event.isFlying()) {
-			debug("onPlayerToggleFlightEvent", "Not flying, rather landing. Return.");
+			verbose("onPlayerToggleFlightEvent", "Not flying, rather landing. Return.");
 			return;
 		}
 		
 		Player player = event.getPlayer();
 		if (!this._controller.inFreebuildWorld(player, false)) {
-			debug("onPlayerToggleFlightEvent", "Not in a freebuilder world. Return.");
+			verbose("onPlayerToggleFlightEvent", "Not in a freebuilder world. Return.");
 			return;
 		}
 		
 		// Allow players with permission freebuild.canfly to fly
 		if (player.hasPermission("freebuild.canfly")) {
-			debug("onPlayerToggleFlightEvent", "User has freebuild.canfly permission. Return.");
+			verbose("onPlayerToggleFlightEvent", "User has freebuild.canfly permission. Return.");
 			return;
 		}
 		
 		if (this._controller.isFreeBuilder(player)) {
-			debug("onPlayerToggleFlightEvent", "The player is a freebuilder. Set fly speed and return.");
+			verbose("onPlayerToggleFlightEvent", "The player is a freebuilder. Set fly speed and return.");
 			Config.C.setSpeed.execute(Config.V.flySpeed, player.getName());
 			return;
 		}
-		debug("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");
+		verbose("onPlayerToggleFlightEvent", "The player is not allowed to fly. Cancel the event and return.");
 		player.sendMessage("You are currently not allowed to fly.");
 		event.setCancelled(true);
 		Config.C.stopFly.executeAs(event.getPlayer());
 	}
-
-	private void debug(String method, String message) {
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
+	
+	private void verbose(String method, String format, Object... args)
+	{
+		this._eithonPlugin.dbgVerbose("EventListener", method, format, args);
 	}
 }
