@@ -1,51 +1,70 @@
 package net.eithon.plugin.freebuild;
 
-import net.eithon.library.extensions.EithonPlayer;
+import net.eithon.library.command.CommandSyntaxException;
+import net.eithon.library.command.EithonCommand;
+import net.eithon.library.command.EithonCommandUtilities;
+import net.eithon.library.command.ICommandSyntax;
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.plugin.CommandParser;
-import net.eithon.library.plugin.ICommandHandler;
 import net.eithon.library.time.CoolDown;
 import net.eithon.plugin.freebuild.logic.Controller;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandHandler implements ICommandHandler {
-	private static final String ON_COMMAND = "/freebuild on";
-	private static final String OFF_COMMAND = "/freebuild off";
-	private static final String RELEASE_COMMAND = "/freebuild release [<player>]";
+public class CommandHandler {
 	private CoolDown _coolDown;
 	private Controller _controller;
+	private ICommandSyntax _commandSyntax;
 
 	public CommandHandler(EithonPlugin eithonPlugin, Controller controller) {
 		this._controller = controller;
 		this._coolDown = new CoolDown("freebuild", Config.V.coolDownTimeInSeconds);
 	}
 
-	public boolean onCommand(CommandParser commandParser) {
-		EithonPlayer eithonPlayer = commandParser.getEithonPlayerOrInformSender();
-		if (eithonPlayer == null) return true;
-		
-		String command = commandParser.getArgumentCommand();
-		if (command == null) return false;
-		
-		if (command.equals("on")) {
-			freeBuildOnCommand(commandParser);
-		} else if (command.equals("off")) {
-			freeBuildOffCommand(commandParser);
-		} else if (command.equals("release")) {
-			releaseCommand(commandParser);
-		} else {
-			commandParser.showCommandSyntax();
+	public ICommandSyntax getCommandSyntax() {
+		if (this._commandSyntax != null) return this._commandSyntax;
+
+		ICommandSyntax commandSyntax = EithonCommand.createRootCommand("freebuild");
+		commandSyntax.setPermissionsAutomatically();
+
+		try {
+			setupBaseCommands(commandSyntax);
+			setupPlayerCommands(commandSyntax);
+		} catch (CommandSyntaxException e) {
+			e.printStackTrace();
+			return null;
 		}
-		return true;
+		this._commandSyntax = commandSyntax;
+		return this._commandSyntax;
 	}
 
-	void freeBuildOnCommand(CommandParser commandParser)
+	public void setupBaseCommands(ICommandSyntax commandSyntax)
+			throws CommandSyntaxException {
+		commandSyntax.parseCommandSyntax("on")
+		.setCommandExecutor(ec->freeBuildOnCommand(ec));
+
+		commandSyntax.parseCommandSyntax("off")
+		.setCommandExecutor(ec->freeBuildOffCommand(ec));
+	}
+
+	public void setupPlayerCommands(ICommandSyntax commandSyntax)
+			throws CommandSyntaxException {
+		// register
+		ICommandSyntax cmd = commandSyntax.parseCommandSyntax("release <player>")
+				.setCommandExecutor(ec->releaseCommand(ec));
+
+		cmd
+		.getParameterSyntax("player")
+		.setMandatoryValues(ec -> EithonCommandUtilities.getOnlinePlayerNames(ec))
+		.setDefaultGetter(ec -> { 
+			Player player = ec.getPlayer(); 
+			return player == null ? null : player.getName();
+		});
+	}
+
+	private void freeBuildOnCommand(EithonCommand ec)
 	{
-		if (!commandParser.hasPermissionOrInformSender("freebuild.on")) return;
-		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1, 1)) return;
-		Player player = commandParser.getPlayer();
+		Player player = ec.getPlayer();
 		if (this._controller.isFreeBuilder(player))
 		{
 			Config.M.alreadyOn.sendMessage(player);
@@ -63,12 +82,9 @@ public class CommandHandler implements ICommandHandler {
 		this._coolDown.addIncident(player);
 	}
 
-	void freeBuildOffCommand(CommandParser commandParser)
+	private void freeBuildOffCommand(EithonCommand ec)
 	{
-		if (!commandParser.hasPermissionOrInformSender("freebuild.off")) return;
-		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1, 1)) return;
-		
-		Player player = commandParser.getPlayer();
+		Player player = ec.getPlayer();
 
 		if (!this._controller.isFreeBuilder(player))
 		{
@@ -83,24 +99,18 @@ public class CommandHandler implements ICommandHandler {
 		this._coolDown.addIncident(player);	
 	}
 
-	void releaseCommand(CommandParser commandParser)
-	{
-		if (!commandParser.hasPermissionOrInformSender("freebuild.release")) return;
-		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1, 2)) return;
+	void releaseCommand(EithonCommand ec)
+	{		
+		Player player = ec.getArgument("player").asPlayer();
+		final CommandSender sender = ec.getSender();
 		
-		Player player = commandParser.getArgumentPlayer(commandParser.getPlayer());
-		if (player == null) {
-			commandParser.showCommandSyntax();
-			return;
-		}
-
 		if (verifyCoolDown(player)) {
-			Config.M.notInCoolDown.sendMessage(commandParser.getSender(), player.getName());
+			Config.M.notInCoolDown.sendMessage(sender, player.getName());
 			return;
 		}
 		
 		releaseFromCoolDown(player);
-		Config.M.releasedFromCoolDown.sendMessage(commandParser.getSender(), player.getName());
+		Config.M.releasedFromCoolDown.sendMessage(sender, player.getName());
 	}
 
 	private void releaseFromCoolDown(Player player) {
@@ -117,18 +127,5 @@ public class CommandHandler implements ICommandHandler {
 		long seconds = secondsLeft - 60 * minutes;
 		Config.M.waitForCoolDown.sendMessage(player, minutes, seconds);
 		return false;
-	}
-
-	@Override
-	public void showCommandSyntax(CommandSender sender, String command) {
-		if (command.equals("on")) {
-			sender.sendMessage(ON_COMMAND);
-		} else if (command.equals("off")) {
-			sender.sendMessage(OFF_COMMAND);
-		} else if (command.equals("release")) {
-			sender.sendMessage(RELEASE_COMMAND);
-		} else {
-			sender.sendMessage(String.format("Unknown command: %s.", command));
-		}
 	}
 }
