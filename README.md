@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 2.0 (2016-06-30)
+
+* CHANGE: Now uses EithonCommand
+
 ### 1.4 (2016-06-30)
 
 * CHANGE: Minecraft 1.10

@@ -5,7 +5,7 @@ import net.eithon.plugin.freebuild.logic.Controller;
 
 import org.bukkit.event.Listener;
 
-public final class Plugin extends EithonPlugin {
+public final class FreeBuildPlugin extends EithonPlugin {
 	private Controller _controller;
 
 	@Override
@@ -15,7 +15,7 @@ public final class Plugin extends EithonPlugin {
 		this._controller = new Controller(this);
 		CommandHandler commandHandler = new CommandHandler(this, this._controller);
 		Listener eventListener = new EventListener(this, this._controller);
-		super.activate(commandHandler, eventListener);
+		super.activate(commandHandler.getCommandSyntax(), eventListener);
 	}
 
 	@Override
