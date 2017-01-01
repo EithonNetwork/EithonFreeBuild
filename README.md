@@ -25,6 +25,10 @@ When the user changes to FreeBuild mode, the following applies:
 
 ## Release history
 
+### 2.1 (2016-12-29)
+
+* CHANGE: Bukkit 1.11.
+
 ### 2.0 (2016-06-30)
 
 * CHANGE: Now uses EithonCommand
